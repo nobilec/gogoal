@@ -45,7 +45,7 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 
 	@Override
 	public void draw(Graphics g) {
-		//position.move((int) position.getX()-3, (int) position.getY());
+		position.move((int) position.getX()-3, (int) position.getY());
 		Point3D imgPos = image.getPosition();
 		imgPos.move((int) position.getX(), (int) position.getY(), imgPos.getZ());
 		
