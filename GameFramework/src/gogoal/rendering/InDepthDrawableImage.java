@@ -10,7 +10,7 @@ import gameframework.base.Drawable;
 public class InDepthDrawableImage implements Drawable
 {
 	private ResizableDrawableImage rImg;
-	private int distanceToCam;
+	private float distanceToCam;
 	private boolean canBeSeen;
 	
 	public InDepthDrawableImage(String filename, Canvas canvas, int imgWidth, int imgHeight){
@@ -20,18 +20,24 @@ public class InDepthDrawableImage implements Drawable
 		canBeSeen = true;
 	}
 	
-	public int getDistanceToCamera(){
+	public float getDistanceToCamera(){
 		return distanceToCam;
 	}
 
-	public void setDistanceToCamera(int dtc){
+	public void setDistanceToCamera(float dtc){
 		if ( dtc != distanceToCam ){
 			
 			Point bDimension = rImg.getBaseDimension();
 			float bWidth = (float) bDimension.getX(), bHeight = (float) bDimension.getY();
-			float factor = dtc >= 0 ? ((float) dtc) + 1.0f : -1.0f;
+			float factor = 0.0f;
 			
-			if ( factor != - 1.0f) {
+			if ( dtc > 0 ){
+				factor = dtc;
+			} else {
+				canBeSeen = false;
+			}
+			
+			if ( canBeSeen ) {
 				// Image is in front of the camera :
 				float nWidth = bWidth * bWidth/factor;
 				float nHeight = bHeight * bHeight/factor;

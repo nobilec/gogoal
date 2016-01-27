@@ -50,7 +50,7 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 		imgPos.move((int) position.getX(), (int) position.getY(), imgPos.getZ());
 		
 		// TEST MOUVEMENT  DE L'IMAGE, peut etre retiré:
-		imgPos.setZ(imgPos.getZ() - 30);
+		imgPos.setZ(imgPos.getZ() - 20);
 		// FIN TEST MOUVEMENT
 		
 		image.render(g, CameraSingleton.getInstance());

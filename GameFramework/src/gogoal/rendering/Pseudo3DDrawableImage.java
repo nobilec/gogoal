@@ -28,11 +28,10 @@ public class Pseudo3DDrawableImage implements Drawable
 	public void render(Graphics g, Point3D cameraPosition){
 		int distanceToCamera = Math.round(position.distance(cameraPosition));
 		
-		if ( position.isBehindZ(cameraPosition) )
-			distanceToCamera *= -1;
-		
-		iddi.setDistanceToCamera(distanceToCamera);
-		iddi.render(g, position.get2DComponent());
+		if ( !position.isBehindZ(cameraPosition) ) {
+			iddi.setDistanceToCamera(distanceToCamera);
+			iddi.render(g, position.get2DComponent());
+		}
 	}
 	
 	@Override
