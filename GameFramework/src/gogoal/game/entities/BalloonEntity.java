@@ -21,7 +21,7 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	protected Point position;
 
 	public BalloonEntity(Canvas defaultCanvas, Point pos) {
-		image = new Pseudo3DDrawableImage("gogoal-resources/balloon-medium-transp.png", defaultCanvas, 128, 128);
+		image = new Pseudo3DDrawableImage("gogoal-resources/balloon-medium-transp.gif", defaultCanvas, 128, 128);
 		position = pos;
 		
 		// TEST MOUVEMENT IMAGE, peut etre retire :
@@ -45,12 +45,12 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 
 	@Override
 	public void draw(Graphics g) {
-		position.move((int) position.getX()-3, (int) position.getY());
+		position.move((int) position.getX(), (int) position.getY());
 		Point3D imgPos = image.getPosition();
 		imgPos.move((int) position.getX(), (int) position.getY(), imgPos.getZ());
 		
 		// TEST MOUVEMENT  DE L'IMAGE, peut etre retiré:
-		imgPos.setZ(imgPos.getZ() - 30);
+		imgPos.setZ(imgPos.getZ() - 40);
 		// FIN TEST MOUVEMENT
 		
 		image.render(g, CameraSingleton.getInstance());
