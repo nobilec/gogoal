@@ -1,12 +1,13 @@
 package gogoal.rendering;
 
+import gogoal.game.GoGoalConfig;
 import gogoal.utility.Point3D;
 
 public class CameraSingleton {
 	private static Point3D instance = null;
 	
 	public static Point3D getInstance(){
-		return getInstance(200, 200, 0);
+		return getInstance(GoGoalConfig.getInstance().WIDTH / 2, GoGoalConfig.getInstance().HEIGHT / 2, 0);
 	}
 	
 	public static Point3D getInstance(int x, int y, int z){

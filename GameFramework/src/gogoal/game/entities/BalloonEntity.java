@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
+import gogoal.game.GoGoalConfig;
 import gogoal.rendering.CameraSingleton;
 import gogoal.rendering.Pseudo3DDrawableImage;
 import gogoal.utility.Point3D;
@@ -21,7 +22,7 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	protected Point position;
 
 	public BalloonEntity(Canvas defaultCanvas, Point pos) {
-		image = new Pseudo3DDrawableImage("gogoal-resources/balloon-medium-transp.gif", defaultCanvas, 128, 128);
+		image = new Pseudo3DDrawableImage(GoGoalConfig.getInstance().BALLOON_IMG, defaultCanvas, 128, 128);
 		position = pos;
 		
 		// TEST MOUVEMENT IMAGE, peut etre retire :
@@ -45,7 +46,7 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 
 	@Override
 	public void draw(Graphics g) {
-		position.move((int) position.getX(), (int) position.getY());
+		position.move((int) position.getX()-7, (int) position.getY()-4);
 		Point3D imgPos = image.getPosition();
 		imgPos.move((int) position.getX(), (int) position.getY(), imgPos.getZ());
 		
