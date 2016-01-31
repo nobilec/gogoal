@@ -24,7 +24,7 @@ public class Camera
 	}
 	
 	public float perspectiveComp(float cComp, float comp, float z){
-		return ((comp - cComp) * ( (z - position.getZ()) / z )) + cComp;
+		return ((comp) * ( (z - position.getZ()) / z ));
 	}
 	
 	public float perspectiveX(float x, float z){

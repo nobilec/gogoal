@@ -20,7 +20,7 @@ public class Pseudo3DDrawableImage implements Drawable
 	}
 	
 	public void render(Graphics g, Point3D position, Point3D cameraPosition){
-		iddi.setDistanceToCamera(position.getZ());
+		iddi.setDistanceToCamera(Math.round(position.getZ()));
 		iddi.render(g, position);
 	}
 	

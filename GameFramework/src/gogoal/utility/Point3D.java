@@ -3,7 +3,7 @@ package gogoal.utility;
 import java.awt.Point;
 
 public class Point3D {
-	private int x, y, z;
+	private float x, y, z;
 	
 	public Point3D(){
 		x = 0;
@@ -11,7 +11,7 @@ public class Point3D {
 		z = 0;
 	}
 	
-	public Point3D(int x, int y, int z){
+	public Point3D(float x, float y, float z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -25,16 +25,16 @@ public class Point3D {
 	}
 	
 	public Point get2DComponent(){
-		return new Point(this.x, this.y);
+		return new Point((int) this.x, (int)this.y);
 	}
 	
-	public void moveTo(int x, int y, int z){
+	public void moveTo(float x, float y, float z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
-	public void move(int xOff, int yOff, int zOff){
+	public void move(float xOff, float yOff, float zOff){
 		this.x += xOff;
 		this.y += yOff;
 		this.z += zOff;
@@ -44,13 +44,13 @@ public class Point3D {
 	public boolean isBehindY(Point3D other){ return this.y < other.y; }
 	public boolean isBehindZ(Point3D other){ return this.z < other.z; }
 	
-	public int getX(){ return x; }
-	public int getY(){ return y; }
-	public int getZ(){ return z; }
+	public float getX(){ return x; }
+	public float getY(){ return y; }
+	public float getZ(){ return z; }
 	
-	public void setX(int x){ this.x = x; }
-	public void setY(int y){ this.y = y; }
-	public void setZ(int z){ this.z = z; }
+	public void setX(float x){ this.x = x; }
+	public void setY(float y){ this.y = y; }
+	public void setZ(float z){ this.z = z; }
 	
 	public String toString(){
 		return "{ " + x + " ; " + y + " ; " + z + " }";

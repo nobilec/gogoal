@@ -77,8 +77,8 @@ public class InDepthDrawableImage implements Drawable
 			int h = (int) dimension.getY();
 			
 			Camera c = Camera.getInstance();
-			int nx = Math.round( c.perspectiveX((float) position.getX(), position.getZ())) - w/2;
-			int ny = Math.round( c.perspectiveY((float) position.getY(), position.getZ())) - h/2;
+			int nx = Math.round( c.perspectiveX(position.getX(), position.getZ())) - w/2;
+			int ny = Math.round( c.perspectiveY(position.getY(), position.getZ())) - h/2;
 			
 			g.drawImage(
 					getImage(), nx, ny, w, h, null);
