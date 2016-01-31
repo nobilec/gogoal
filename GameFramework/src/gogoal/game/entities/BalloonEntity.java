@@ -9,7 +9,7 @@ import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gogoal.game.GoGoalConfig;
-import gogoal.rendering.CameraSingleton;
+import gogoal.rendering.Camera;
 import gogoal.rendering.Pseudo3DDrawableImage;
 import gogoal.utility.Point3D;
 
@@ -19,14 +19,13 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	/* Donnees de collision et de position
 	 * temporaires, en attendant que ça passe en 3D
 	 */
-	protected Point position;
+	protected Point3D position;
+	protected Point pos2;
 
-	public BalloonEntity(Canvas defaultCanvas, Point pos) {
+	public BalloonEntity(Canvas defaultCanvas, Point3D pos) {
 		image = new Pseudo3DDrawableImage(GoGoalConfig.getInstance().BALLOON_IMG, defaultCanvas, 128, 128);
 		position = pos;
-		
-		// TEST MOUVEMENT IMAGE, peut etre retire :
-		image.getPosition().setZ(1000);
+		pos2 = new Point(pos.getX(), pos.getY());
 	}
 	
 	/*
@@ -35,26 +34,27 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	@Override
 	public Rectangle getBoundingBox() {
 		Point dimension = image.getDimension();
-		return new Rectangle( (int) position.getX(), (int) position.getY(),
+		return new Rectangle( 
+				(int) position.getX(), (int) position.getY(),
 				(int) dimension.getX(), (int) dimension.getY());
 	}
 
 	@Override
 	public Point getPosition() {
+		return pos2;
+	}
+	
+	public Point3D get3DPosition() {
 		return position;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		position.move((int) position.getX()-7, (int) position.getY()-4);
-		Point3D imgPos = image.getPosition();
-		imgPos.move((int) position.getX(), (int) position.getY(), imgPos.getZ());
+		// TEST MOUVEMENT
+		position.move(-2, -2, -15);
 		
-		// TEST MOUVEMENT  DE L'IMAGE, peut etre retiré:
-		imgPos.setZ(imgPos.getZ() - 40);
-		// FIN TEST MOUVEMENT
-		
-		image.render(g, CameraSingleton.getInstance());
+		pos2.setLocation(position.getX(), position.getY());
+		image.render(g, position, Camera.getInstance().getPosition());
 	}
 
 }

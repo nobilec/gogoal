@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Point;
 
 import gameframework.base.Drawable;
+import gogoal.utility.Point3D;
 
 public class InDepthDrawableImage implements Drawable
 {
@@ -68,18 +69,19 @@ public class InDepthDrawableImage implements Drawable
 		rImg.draw(g);
 	}
 	
-	public void render(Graphics g, Point position){
+	public void render(Graphics g, Point3D position){
 		if ( canBeSeen ){
 			Point dimension = getDimension();
 			
 			int w = (int) dimension.getX();
 			int h = (int) dimension.getY();
 			
+			Camera c = Camera.getInstance();
+			int nx = Math.round( c.perspectiveX((float) position.getX(), position.getZ())) - w/2;
+			int ny = Math.round( c.perspectiveY((float) position.getY(), position.getZ())) - h/2;
+			
 			g.drawImage(
-					getImage(),
-					(int) position.getX() - (w/2), (int) position.getY() - (h/2),
-					w, h,
-					null);
+					getImage(), nx, ny, w, h, null);
 		}
 	}
 
