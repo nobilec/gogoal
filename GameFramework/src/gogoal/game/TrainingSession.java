@@ -12,6 +12,7 @@ import gameframework.game.MoveBlockerChecker;
 import gameframework.game.MoveBlockerCheckerDefaultImpl;
 import gameframework.game.OverlapProcessor;
 import gameframework.game.OverlapProcessorDefaultImpl;
+import gogoal.perception_effects.ProxyPerceptionEffect;
 
 public abstract class TrainingSession extends GameLevelDefaultImpl
 {
@@ -20,12 +21,14 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	private boolean stopTS;
 	private int gameUpdateDelay;
 	protected Canvas canvas;
+	protected ProxyPerceptionEffect effects;
 
 	public TrainingSession(Game g) {
 		super(g);
 		canvas = g.getCanvas();
 		stopTS = false;
 		gameUpdateDelay = DEFAULT_GAME_UPDATE_DELAY;
+		effects = new ProxyPerceptionEffect();
 	}
 
 	@Override
@@ -59,6 +62,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		long start;
 		while (!stopTS && !this.isInterrupted()) {
 			start = new Date().getTime();
+			effects.apply();
 			gameBoard.paint();
 			universe.allOneStepMoves();
 			universe.processAllOverlaps();
