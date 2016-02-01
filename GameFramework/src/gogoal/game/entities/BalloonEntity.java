@@ -9,6 +9,8 @@ import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gogoal.game.GoGoalConfig;
+import gogoal.perception_effects.PerceptionEffectAbs;
+import gogoal.perception_effects.PerceptionEffectDizzy;
 import gogoal.rendering.Camera;
 import gogoal.rendering.Pseudo3DDrawableImage;
 import gogoal.utility.Point3D;
@@ -21,11 +23,15 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	 */
 	protected Point3D position;
 	protected Point pos2;
+	
+	// TEST EFFETS CAMERA
+	PerceptionEffectAbs effects;
 
 	public BalloonEntity(Canvas defaultCanvas, Point3D pos) {
 		image = new Pseudo3DDrawableImage(GoGoalConfig.getInstance().BALLOON_IMG, defaultCanvas, 128, 128);
 		position = pos;
 		pos2 = new Point((int)pos.getX(), (int) pos.getY());
+		effects = new PerceptionEffectDizzy();
 	}
 	
 	/*
@@ -52,6 +58,8 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	public void draw(Graphics g) {
 		// TEST MOUVEMENT
 		position.move(-0.7f, -0.5f, -5.0f);
+		// TEST PERCEPTION
+		effects.apply();
 		
 		pos2.setLocation(position.getX(), position.getY());
 		image.render(g, position, Camera.getInstance().getPosition());
