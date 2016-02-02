@@ -6,12 +6,38 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import gogoal.game.GoGoalConfig;
+import gogoal.game.items.CommandItem;
+import gogoal.game.items.VisitorBalloon;
 import gogoal.utility.Point3D;
 
 public class BalloonEntity extends GoGoal3DEntity
 {
+	protected CommandItem carriedItem;
+	
 	public BalloonEntity(Canvas defaultCanvas, Point3D pos) {
 		super(defaultCanvas, GoGoalConfig.getInstance().BALLOON_IMG, 128, 128, pos);
+		carriedItem = null;
+	}
+
+	public void accept(VisitorBalloon v){
+		v.visit(this);
+	}
+	
+	public void setCarriedItem(CommandItem item){
+		this.carriedItem = item;
+	}
+	
+	public void executeCommand(){
+		if ( (isLost() && carriedItem.isMalus()) ||
+			 !(isLost() && carriedItem.isMalus()) )
+		{
+			carriedItem.execute();
+			carriedItem = null;
+		}
+	}
+	
+	public boolean isLost(){
+		return false; // A implémenter
 	}
 	
 	/*
@@ -30,7 +56,17 @@ public class BalloonEntity extends GoGoal3DEntity
 		// TEST MOUVEMENT
 		position.move(-0.5f, -0.8f, -5.0f);
 		
-		super.draw(g);
+		if ( carriedItem == null ){
+			super.draw(g);
+		} else {
+			super.draw(g, carriedItem.getImage());
+			
+			/* TEST EXECUTION COMMANDE, A FAIRE QUAND LE BALLON EST 
+			 * TERMINE (pris ou perdu)
+			 */
+			if ( position.getZ() <= 0.0f )
+				executeCommand();
+		}
 	}
 
 }

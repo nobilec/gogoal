@@ -15,6 +15,8 @@ import gogoal.utility.Point3D;
 public abstract class GoGoal3DEntity implements Drawable, GameEntity, Overlappable
 {
 	protected Pseudo3DDrawableImage image;
+
+
 	protected Point3D position;
 	protected Point pos2;
 	
@@ -25,6 +27,17 @@ public abstract class GoGoal3DEntity implements Drawable, GameEntity, Overlappab
 		this.image = new Pseudo3DDrawableImage(imageFile, defaultCanvas, imgWidth, imgHeight);
 		this.position = position;
 		this.pos2 = position.get2DComponent();
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		draw(g, image);
+	}
+	
+	protected void draw(Graphics g, Pseudo3DDrawableImage im){
+		pos2.setLocation(position.getX(), position.getY());
+		if ( im != null )
+			im.render(g, position, Camera.getInstance().getPosition());
 	}
 	
 	@Override
@@ -40,11 +53,8 @@ public abstract class GoGoal3DEntity implements Drawable, GameEntity, Overlappab
 	public Point3D get3DPosition(){
 		return position;
 	}
-
-	@Override
-	public void draw(Graphics g) {
-		pos2.setLocation(position.getX(), position.getY());
-		image.render(g, position, Camera.getInstance().getPosition());
+	
+	public Pseudo3DDrawableImage getImage() {
+		return image;
 	}
-
 }

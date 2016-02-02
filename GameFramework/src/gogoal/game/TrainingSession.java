@@ -137,6 +137,8 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		stopTS = true;
 	}
 	
+	protected abstract void setUpLevel();
+	
 	public void setGameUpdateDelay(int gud){
 		gameUpdateDelay = gud;
 	}
@@ -145,5 +147,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		return gameUpdateDelay;
 	}
 	
-	protected abstract void setUpLevel();
+	public ProxyPerceptionEffect getProxyPreceptionEffect(){
+		return effects;
+	}
 }
