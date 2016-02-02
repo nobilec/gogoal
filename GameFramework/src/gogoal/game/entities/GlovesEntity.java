@@ -6,6 +6,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 
 import gogoal.game.GoGoalConfig;
+import gogoal.rendering.Camera;
 import gogoal.utility.Point3D;
 
 public class GlovesEntity extends GoGoal3DEntity {
@@ -18,8 +19,8 @@ public class GlovesEntity extends GoGoal3DEntity {
 	@Override
 	public void draw(Graphics g){
 		Point mPos = MouseInfo.getPointerInfo().getLocation();
-		position.moveTo(mPos.x, mPos.y, position.getZ());
+		Camera c = Camera.getInstance();
+		position.moveTo(mPos.x + c.getXOffset() * 2.0f, mPos.y + c.getYOffset() * 2.0f, position.getZ());
 		super.draw(g);
 	}
-
 }
