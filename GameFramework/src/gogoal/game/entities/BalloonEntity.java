@@ -28,7 +28,7 @@ public class BalloonEntity extends GoGoal3DEntity
 	@Override
 	public void draw(Graphics g) {
 		// TEST MOUVEMENT
-		position.move(-0.0f, -0.0f, -5.0f);
+		position.move(-0.5f, -0.8f, -5.0f);
 		
 		super.draw(g);
 	}

@@ -25,14 +25,14 @@ public class TrainingSessionOne extends TrainingSession
 		bped.setMagnitude(80.0f);
 		bped.setVertical(true);
 		
-		//effects.composeEffect(bped);
+		effects.composeEffect(bped);
 		
 		bped.setDuration(12000);
 		bped.setIntensity(1.0f);
 		bped.setMagnitude(50.0f);
 		bped.setVertical(false);
 		
-		//effects.composeEffect(bped);
+		effects.composeEffect(bped);
 	}
 
 }
