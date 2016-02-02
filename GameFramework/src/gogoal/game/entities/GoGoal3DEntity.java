@@ -36,6 +36,10 @@ public abstract class GoGoal3DEntity implements Drawable, GameEntity, Overlappab
 	public Point getPosition() {
 		return pos2;
 	}
+	
+	public Point3D get3DPosition(){
+		return position;
+	}
 
 	@Override
 	public void draw(Graphics g) {

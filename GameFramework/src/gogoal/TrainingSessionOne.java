@@ -15,7 +15,7 @@ public class TrainingSessionOne extends TrainingSession
 	@Override
 	protected void setUpLevel() {
 		BalloonEntity be = new BalloonEntity(canvas, new Point3D(400, 300, 1000));
-		universe.addGameEntity(be);
+		placeBalloonEntity(be);
 		
 		// TEST COMPOSITION D'EFFETS :
 		BuilderPerceptionEffectDizzy bped = new BuilderPerceptionEffectDizzy();
@@ -25,14 +25,14 @@ public class TrainingSessionOne extends TrainingSession
 		bped.setMagnitude(80.0f);
 		bped.setVertical(true);
 		
-		effects.composeEffect(bped);
+		//effects.composeEffect(bped);
 		
 		bped.setDuration(12000);
 		bped.setIntensity(1.0f);
 		bped.setMagnitude(50.0f);
 		bped.setVertical(false);
 		
-		effects.composeEffect(bped);
+		//effects.composeEffect(bped);
 	}
 
 }

@@ -27,15 +27,14 @@ public class InDepthDrawableImage implements Drawable
 
 	public void setDistanceToCamera(int dtc){
 		if ( dtc != distanceToCam ){
-			
 			Point bDimension = rImg.getBaseDimension();
 			float bWidth = (float) bDimension.getX(), bHeight = (float) bDimension.getY();
 			float factor = dtc >= 0 ? ((float) dtc) + 1.0f : -1.0f;
 			
 			if ( factor != - 1.0f) {
 				// Image is in front of the camera :
-				float nWidth = bWidth * bWidth/factor;
-				float nHeight = bHeight * bHeight/factor;
+				float nWidth = bWidth * (bWidth/factor);
+				float nHeight = bHeight * (bHeight/factor);
 				
 				if ( 	nWidth >= 0.5f && nHeight >= 0.5f && 
 						nWidth <= ResizableDrawableImage.SIZE_LIMIT && 
@@ -52,7 +51,8 @@ public class InDepthDrawableImage implements Drawable
 				// Image is behind the camera :
 				canBeSeen = false;
 			}
-			distanceToCam = dtc;
+			distanceToCam = dtc;//*/
+			
 		}
 	}
 	

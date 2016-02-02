@@ -5,27 +5,13 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import gameframework.base.Drawable;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
 import gogoal.game.GoGoalConfig;
-import gogoal.rendering.Camera;
-import gogoal.rendering.Pseudo3DDrawableImage;
 import gogoal.utility.Point3D;
 
-public class BalloonEntity implements Drawable, GameEntity, Overlappable
+public class BalloonEntity extends GoGoal3DEntity
 {
-	protected Pseudo3DDrawableImage image;
-	/* Donnees de collision et de position
-	 * temporaires, en attendant que ça passe en 3D
-	 */
-	protected Point3D position;
-	protected Point pos2;
-
 	public BalloonEntity(Canvas defaultCanvas, Point3D pos) {
-		image = new Pseudo3DDrawableImage(GoGoalConfig.getInstance().BALLOON_IMG, defaultCanvas, 128, 128);
-		position = pos;
-		pos2 = new Point((int)pos.getX(), (int) pos.getY());
+		super(defaultCanvas, GoGoalConfig.getInstance().BALLOON_IMG, 128, 128, pos);
 	}
 	
 	/*
@@ -40,21 +26,11 @@ public class BalloonEntity implements Drawable, GameEntity, Overlappable
 	}
 
 	@Override
-	public Point getPosition() {
-		return pos2;
-	}
-	
-	public Point3D get3DPosition() {
-		return position;
-	}
-
-	@Override
 	public void draw(Graphics g) {
 		// TEST MOUVEMENT
-		position.move(-0.7f, -0.5f, -5.0f);
+		position.move(-0.0f, -0.0f, -5.0f);
 		
-		pos2.setLocation(position.getX(), position.getY());
-		image.render(g, position, Camera.getInstance().getPosition());
+		super.draw(g);
 	}
 
 }

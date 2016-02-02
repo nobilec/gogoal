@@ -18,8 +18,10 @@ public class ResizableDrawableImage extends DrawableImage
 	}
 	
 	public void resize(int width, int height){
-		if ( width <= SIZE_LIMIT && height <= SIZE_LIMIT )
+		if ( width <= SIZE_LIMIT && height <= SIZE_LIMIT ){
+			//System.out.println("nDIM = " + width + " ; " + height );
 			dimension.move(width, height);
+		}
 	}
 	
 	public Point getBaseDimension(){
