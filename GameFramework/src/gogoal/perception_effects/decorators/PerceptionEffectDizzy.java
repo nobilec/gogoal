@@ -8,6 +8,7 @@ public abstract class PerceptionEffectDizzy extends PerceptionEffectAbsTimed
 	
 	protected float position;
 	protected boolean direction;
+	protected float offsetBefore;
 	
 	public PerceptionEffectDizzy(){
 		this( null);
@@ -24,14 +25,24 @@ public abstract class PerceptionEffectDizzy extends PerceptionEffectAbsTimed
 	@Override
 	protected void runEffects() {
 		float cOff = getCameraPosition();
-		float mvt = (position + intensity >= magnitude) ? magnitude - position : intensity;
+		float mvt;
 		
-		cOff += direction ? mvt : - mvt;
+		if ( direction )
+			mvt = ((position + intensity) >= magnitude) ? magnitude - position : intensity;
+		else
+			mvt = ((position - intensity) <= -magnitude) ? - magnitude - position : -intensity;
+		
+		cOff += mvt;
 		position += mvt;
 		
-		if ( position >= magnitude ){
-			direction = !direction;
-			position = 0.0f;
+		if ( direction ){
+			if ( position >= magnitude ){
+				direction = !direction;
+			}
+		} else {
+			if ( position <= -magnitude){
+				direction = !direction;
+			}
 		}
 		
 		setCameraPosition(cOff);

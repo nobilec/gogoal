@@ -13,7 +13,6 @@ import gameframework.game.MoveBlockerCheckerDefaultImpl;
 import gameframework.game.OverlapProcessor;
 import gameframework.game.OverlapProcessorDefaultImpl;
 import gogoal.game.entities.FootballFieldEntity;
-import gogoal.game.entities.GoalEntity;
 import gogoal.perception_effects.ProxyPerceptionEffect;
 
 public abstract class TrainingSession extends GameLevelDefaultImpl
@@ -50,14 +49,11 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		canvas.getParent().setSize(w, h);
 		canvas.getParent().validate();
 		gameBoard = new GameUniverseViewPortDefaultImpl(canvas, universe);
-		//((GameUniverseViewPortDefaultImpl)gameBoard).setBackground(GoGoalConfig.getInstance().BACKGROUND_IMG);
 		gameBoard.refresh();
 		((CanvasDefaultImpl) canvas).setDrawingGameBoard(gameBoard);
 		
 		FootballFieldEntity ffe = new FootballFieldEntity(canvas);
-		GoalEntity ge = new GoalEntity(canvas);
 		universe.addGameEntity(ffe);
-		universe.addGameEntity(ge);
 		
 		setUpLevel();
 	}
