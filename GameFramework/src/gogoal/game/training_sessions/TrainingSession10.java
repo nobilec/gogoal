@@ -8,24 +8,25 @@ import gogoal.game.items.VisitorBalloon;
 import gogoal.game.items.VisitorBalloonImpl;
 import gogoal.utility.Point3D;
 
-public class TrainingSession5 extends TrainingSession
-{
-	public TrainingSession5(Game g) {
+public class TrainingSession10 extends TrainingSession {
+
+	public TrainingSession10(Game g) {
 		super(g);
 	}
-
+	
 	@Override
 	protected void setUpLevel() {
 		VisitorBalloon vb = new VisitorBalloonImpl(
 				ListCommandItem.getInstance(),
-				30, 40);
+				45, 100);
 		
-		for ( int i = 1; i <= 16; ++i){
+		for ( int i = 1; i <= 30; ++i){
 			
 			BalloonEntity be = new BalloonEntity(canvas, new Point3D(400, 300, 1000));
-			be.setSpeedMult(1.0f + 2.0f / (float) i );
+			be.setSpeedMult(5.0f + 5.0f / (float) i );
 			be.accept(vb);
 			bStack.push(be);
 		}
 	}
+
 }

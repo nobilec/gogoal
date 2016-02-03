@@ -105,18 +105,28 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	}
 	
 	public void nextBalloon(){
-		if ( !bStack.isEmpty() ){
-			if ( but == 1 ){
-				currentBalloon.executeCommand(true);
-			} else {
-				addToScore(1);
-				currentBalloon.executeCommand(false);
-			}
-			
-			BalloonEntity nb = bStack.pop();
-			placeBalloonEntity(nb);
+		boolean defeat = false;
+		boolean malus = false;
+		
+		if ( but == 1 ){
+			modLife(-1);
+			defeat = ((GoGoal) g).isPlayerDefeated();
+			malus = true;
 		} else {
-			((GoGoal) g).nextLevel();
+			addToScore(1);
+			malus = false;
+		}
+		
+		if ( !defeat ){
+			if ( !bStack.isEmpty() ){
+				currentBalloon.executeCommand(malus);
+				BalloonEntity nb = bStack.pop();
+				placeBalloonEntity(nb);
+			} else {
+				((GoGoal) g).nextLevel();
+			}
+		} else {
+			currentBalloon = null;
 		}
 	}
 	
@@ -134,6 +144,14 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	
 	public void addToScore(int value){
 		score[0].setValue(score[0].getValue() + value);
+	}
+	
+	public void modLife(int value){
+		life[0].setValue(life[0].getValue() + value);
+		
+		if ( life[0].getValue() == 0 ){
+			((GoGoal) g).defeat();
+		}
 	}
 
 	@Override
@@ -182,9 +200,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 				if (sleepTime > 0) {
 					Thread.sleep(sleepTime);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} catch (Exception e) {}
 		}
 	}
 

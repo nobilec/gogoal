@@ -16,7 +16,7 @@ public class GoGoal extends GameDefaultImpl {
 	
 	private TrainingSession currentLevel;
 	private int currentLevelIndex;
-	private boolean started;
+	private boolean started, defeat;
 	
 	private GoGoal(){
 		super();
@@ -32,20 +32,22 @@ public class GoGoal extends GameDefaultImpl {
 	}
 	
 	private void init(){
-		currentLevel = new TrainingSession9(this);
+		defeat = false;
+		currentLevel = new TrainingSession01(this);
 		currentLevelIndex = 0;
 		
 		ArrayList<GameLevel> levels = new ArrayList<GameLevel>();
 		
 		levels.add(currentLevel);
-		levels.add(new TrainingSession2(this));
-		levels.add(new TrainingSession3(this));
-		levels.add(new TrainingSession4(this));
-		levels.add(new TrainingSession5(this));
-		levels.add(new TrainingSession6(this));
-		levels.add(new TrainingSession7(this));
-		levels.add(new TrainingSession8(this));
-		levels.add(new TrainingSession9(this));
+		levels.add(new TrainingSession02(this));
+		levels.add(new TrainingSession03(this));
+		levels.add(new TrainingSession04(this));
+		levels.add(new TrainingSession05(this));
+		levels.add(new TrainingSession06(this));
+		levels.add(new TrainingSession07(this));
+		levels.add(new TrainingSession08(this));
+		levels.add(new TrainingSession09(this));
+		levels.add(new TrainingSession10(this));
 		
 		this.setLevels(levels);
 		
@@ -78,6 +80,7 @@ public class GoGoal extends GameDefaultImpl {
 	}
 	
 	public void nextLevel(){
+		System.out.println("NAIXTE");
 		this.currentLevel.end();
 		++this.currentLevelIndex;
 		
@@ -88,5 +91,17 @@ public class GoGoal extends GameDefaultImpl {
 			this.currentLevel = null;
 			System.out.println("Felicitations, vous avez terminé le jeu");
 		}
+	}
+	
+	public boolean isPlayerDefeated(){
+		return defeat;
+	}
+	
+	public void defeat(){
+		endOfGame();
+		this.currentLevel.end();
+		this.currentLevel = null;
+		defeat = true;
+		System.out.println("Vous avez perdu!");
 	}
 }

@@ -5,10 +5,10 @@ import gogoal.game.TrainingSession;
 import gogoal.game.entities.BalloonEntity;
 import gogoal.utility.Point3D;
 
-public class TrainingSession2 extends TrainingSession
+public class TrainingSession02 extends TrainingSession
 {
 
-	public TrainingSession2(Game g) {
+	public TrainingSession02(Game g) {
 		super(g);
 	}
 

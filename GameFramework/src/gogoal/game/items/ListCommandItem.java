@@ -35,7 +35,7 @@ public class ListCommandItem extends ArrayList<CommandItem>{
 		// Speed :
 		
 		BuilderPerceptionEffectSpeed speedBuilder = new BuilderPerceptionEffectSpeed();
-		speedBuilder.setSpeedMultiplier(0.3f);
+		speedBuilder.setSpeedMultiplier(0.6f);
 		speedBuilder.setDuration(8000);
 		this.add(
 				new CommandItemImpl(
