@@ -62,28 +62,30 @@ public class ProxyPerceptionEffect implements Observer {
 	
 	private void removeTerminatedEffects(){
 		PerceptionEffectAbs cur = end;
-		PerceptionEffectAbs nxt = cur.getDecorated();
-		
-		while ( cur != null && cur.hasWornOff() ){
-			end = cur.getDecorated();
-			cur.setDecorated(null);
-			cur = null;
-		}
-		
-		while ( cur != null ){
+		if ( cur != null ){
+			PerceptionEffectAbs nxt = cur.getDecorated();
 			
-			if (nxt != null )
-				if ( nxt.hasWornOff() ){
-					cur.setDecorated(nxt.getDecorated());
-					nxt.setDecorated(null);
-					nxt = null;
-				}
+			while ( cur != null && cur.hasWornOff() ){
+				end = cur.getDecorated();
+				cur.setDecorated(null);
+				cur = null;
+			}
 			
-			cur = cur.getDecorated();
-			if ( cur != null ) nxt = cur.getDecorated();
+			while ( cur != null ){
+				
+				if (nxt != null )
+					if ( nxt.hasWornOff() ){
+						cur.setDecorated(nxt.getDecorated());
+						nxt.setDecorated(null);
+						nxt = null;
+					}
+				
+				cur = cur.getDecorated();
+				if ( cur != null ) nxt = cur.getDecorated();
+			}
+			
+			removeWornOff = false;
 		}
-		
-		removeWornOff = false;
 	}
 	
 	@Override

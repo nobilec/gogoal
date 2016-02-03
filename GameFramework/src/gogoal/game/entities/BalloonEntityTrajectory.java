@@ -6,8 +6,9 @@ import java.util.Random;
 public class BalloonEntityTrajectory 
 {
 	private static final float DEFAULT_Z_SPEED = -5.0f;
+	private static final float DEFAULT_SPEED_MULT = 1.0f;
 	
-	private float zSpeed;
+	private float zSpeed, speedMult;
 	private BalloonEntity owner;
 	private boolean v = true; 
 	private int x=0;
@@ -19,6 +20,7 @@ public class BalloonEntityTrajectory
 		super();
 		this.owner = owner;
 		this.zSpeed = DEFAULT_Z_SPEED;
+		this.speedMult = DEFAULT_SPEED_MULT;
 	}
 
 	void update() {
@@ -33,7 +35,7 @@ public class BalloonEntityTrajectory
 		//System.out.println("y="+taby[y]);
 		}
 		//System.out.println(2.0f);
-		owner.get3DPosition().move(tabx[x], taby[y], zSpeed);
+		owner.get3DPosition().move(tabx[x] * speedMult, taby[y] * speedMult, zSpeed * speedMult);
 	}
 	
 	private float randRange(int min, int max) {
@@ -43,11 +45,11 @@ public class BalloonEntityTrajectory
 		return res;
 	}
 
-	float getZSpeed() {
-		return zSpeed;
+	public float getSpeedMult() {
+		return speedMult;
 	}
 
-	void setZSpeed(float zSpeed) {
-		this.zSpeed = zSpeed;
+	public void setSpeedMult(float speedMult) {
+		this.speedMult = speedMult;
 	}
 }

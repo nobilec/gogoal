@@ -40,7 +40,7 @@ public class ListCommandItem extends ArrayList<CommandItem>{
 		this.add(
 				new CommandItemImpl(
 						GoGoalConfig.getInstance().SPEED_IMG, GoGoal.getInstance().getCanvas(), 128, 128,
-						true, speedBuilder)
+						false, speedBuilder)
 				);
 		
 		// Bloblotte :

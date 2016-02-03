@@ -2,6 +2,7 @@ package gogoal.game;
 
 import java.awt.Canvas;
 import java.util.Date;
+import java.util.Stack;
 
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
@@ -12,11 +13,17 @@ import gameframework.game.MoveBlockerChecker;
 import gameframework.game.MoveBlockerCheckerDefaultImpl;
 import gameframework.game.OverlapProcessor;
 import gameframework.game.OverlapProcessorDefaultImpl;
+import gogoal.GoGoal;
 import gogoal.game.entities.BalloonEntity;
 import gogoal.game.entities.FootballFieldEntity;
 import gogoal.game.entities.GlovesEntity;
 import gogoal.game.entities.GoalEntity;
+import gogoal.game.items.ListCommandItem;
+import gogoal.game.items.VisitorBalloon;
+import gogoal.game.items.VisitorBalloonImpl;
 import gogoal.perception_effects.ProxyPerceptionEffect;
+import gogoal.rendering.Camera;
+import gogoal.utility.Point3D;
 
 public abstract class TrainingSession extends GameLevelDefaultImpl
 {
@@ -26,10 +33,13 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	private int gameUpdateDelay;
 	protected Canvas canvas;
 	
+	protected Stack<BalloonEntity> bStack;
 	protected int balloonsFired;
+	protected boolean goalChecked;
 	private int deffx = 0;
 	private int deffy = 0;
 	private int but = 0;
+	
 	protected ProxyPerceptionEffect effects;
 	
 	protected FootballFieldEntity footballField;
@@ -41,8 +51,12 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		super(g);
 		canvas = g.getCanvas();
 		stopTS = true;
+		
+		bStack = new Stack<BalloonEntity>();
 		gameUpdateDelay = DEFAULT_GAME_UPDATE_DELAY;
 		balloonsFired = 0;
+		but = 0;
+		goalChecked = false;
 		effects = new ProxyPerceptionEffect();
 	}
 	
@@ -51,26 +65,58 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	 * behind the other.
 	 */
 	private void checkBalloonGlovesPosition(){
-		if ( 	currentBalloon != null && 
-				currentBalloon.get3DPosition().isBehindZ(gloves.get3DPosition())) 
-		{
-			universe.removeGameEntity(currentBalloon);
-			universe.removeGameEntity(gloves);
-			
-			universe.addGameEntity(gloves);
-			universe.addGameEntity(currentBalloon);
-			
-			if (Math.abs(deffx)>100){
-				System.out.println("but");
-			}else{
-				System.out.println("pas but");
-			} 
-		} else {
-				deffx = currentBalloon.getPosition().x - gloves.getPosition().x;
-				deffy = currentBalloon.getPosition().y - gloves.getPosition().y;
+		if ( !goalChecked ){
+			if ( 	currentBalloon != null && 
+					currentBalloon.get3DPosition().isBehindZ(gloves.get3DPosition())) 
+			{
+				universe.removeGameEntity(currentBalloon);
+				universe.removeGameEntity(gloves);
+				
+				universe.addGameEntity(gloves);
+				universe.addGameEntity(currentBalloon);
+				
+				if  ( 	Math.abs(deffx) > 100 )
+				{
+					System.out.println("but");
+					but = 1;
+				} else {
+					System.out.println("pas but");
+					but = 0;
+					nextBalloon();
+				}
+				goalChecked = true;
+				
+			} else {
+					deffx = currentBalloon.getPosition().x - gloves.getPosition().x;
+					//deffy = currentBalloon.getPosition().y - gloves.getPosition().y;
+					//System.out.println("différence x ="+deffx);
+					//System.out.println("différence y ="+deffy);
+			}
+		}
+	}
 	
-				System.out.println("différence x ="+deffx);
-				//System.out.println("différence y ="+deffy);1
+	// Score, or not.
+	public void checkBalloonCameraPosition(){
+		if ( 	currentBalloon != null && 
+				currentBalloon.get3DPosition().isBehindZ(Camera.getInstance().getPosition())) 
+		{
+			nextBalloon();
+		}
+	}
+	
+	public void nextBalloon(){
+		if ( !bStack.isEmpty() ){
+			if ( but == 1 ){
+				currentBalloon.executeCommand(true);
+			} else {
+				addToScore(1);
+				currentBalloon.executeCommand(false);
+			}
+			
+			BalloonEntity nb = bStack.pop();
+			placeBalloonEntity(nb);
+		} else {
+			((GoGoal) g).nextLevel();
 		}
 	}
 	
@@ -82,6 +128,8 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		universe.addGameEntity(be);
 		universe.addGameEntity(gloves);
 		currentBalloon = be;
+		goalChecked = false;
+		but = 0;
 	}
 	
 	public void addToScore(int value){
@@ -110,6 +158,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		universe.addGameEntity(goal);
 		
 		setUpLevel();
+		placeBalloonEntity(bStack.pop());
 	}
 	
 	@Override
@@ -125,6 +174,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 			universe.allOneStepMoves();
 			universe.processAllOverlaps();
 			checkBalloonGlovesPosition();
+			checkBalloonCameraPosition();
 			
 			try {
 				long sleepTime = gameUpdateDelay

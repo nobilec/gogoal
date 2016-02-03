@@ -9,6 +9,7 @@ import gameframework.game.GameDefaultImpl;
 import gameframework.game.GameLevel;
 import gogoal.game.GoGoalConfig;
 import gogoal.game.TrainingSession;
+import gogoal.game.training_sessions.*;
 
 public class GoGoal extends GameDefaultImpl {
 	private static GoGoal instance = null;
@@ -31,12 +32,21 @@ public class GoGoal extends GameDefaultImpl {
 	}
 	
 	private void init(){
-		currentLevel = new TrainingSessionOne(this);
+		currentLevel = new TrainingSession9(this);
 		currentLevelIndex = 0;
 		
 		ArrayList<GameLevel> levels = new ArrayList<GameLevel>();
+		
 		levels.add(currentLevel);
-		levels.add(new TrainingSessionOne(this));
+		levels.add(new TrainingSession2(this));
+		levels.add(new TrainingSession3(this));
+		levels.add(new TrainingSession4(this));
+		levels.add(new TrainingSession5(this));
+		levels.add(new TrainingSession6(this));
+		levels.add(new TrainingSession7(this));
+		levels.add(new TrainingSession8(this));
+		levels.add(new TrainingSession9(this));
+		
 		this.setLevels(levels);
 		
 		/*

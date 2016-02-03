@@ -9,7 +9,7 @@ public class PerceptionEffectSpeed extends PerceptionEffectAbsTimed
 	public static final float DEFAULT_SPEED_MULT = 0.5f;
 	
 	private BalloonEntity lastModifiedRef;
-	private float lastModifiedBaseSpeed;
+	private float lastModifiedBaseMult;
 	
 	public PerceptionEffectSpeed() {
 		this(null);
@@ -28,9 +28,8 @@ public class PerceptionEffectSpeed extends PerceptionEffectAbsTimed
 			
 			if ( be != null && be != lastModifiedRef) {
 					lastModifiedRef = be;
-					lastModifiedBaseSpeed = be.getZSpeed();
-					
-					lastModifiedRef.setZSpeed(lastModifiedBaseSpeed * intensity);
+					lastModifiedBaseMult = be.getSpeedMult();
+					lastModifiedRef.setSpeedMult(intensity);
 			}
 		}
 	}
@@ -40,7 +39,7 @@ public class PerceptionEffectSpeed extends PerceptionEffectAbsTimed
 		super.wearOff();
 		
 		if ( lastModifiedRef != null ){
-			lastModifiedRef.setZSpeed(lastModifiedBaseSpeed);
+			lastModifiedRef.setSpeedMult(lastModifiedBaseMult);
 		}
 	}
 

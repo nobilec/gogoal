@@ -21,12 +21,12 @@ public class BalloonEntity extends GoGoal3DEntity
 		carriedItem = null;
 	}
 	
-	public void setZSpeed(float zSpeed){
-		trajectory.setZSpeed(zSpeed);
+	public float getSpeedMult() {
+		return trajectory.getSpeedMult();
 	}
-	
-	public float getZSpeed(){
-		return trajectory.getZSpeed();
+
+	public void setSpeedMult(float speedMult) {
+		trajectory.setSpeedMult(speedMult);
 	}
 
 	public void accept(VisitorBalloon v){
@@ -37,19 +37,16 @@ public class BalloonEntity extends GoGoal3DEntity
 		this.carriedItem = item;
 	}
 	
-	public void executeCommand(){
-		if ( (isLost() && carriedItem.isMalus()) ||
-			 !(isLost() && carriedItem.isMalus()) )
-		{
-			carriedItem.execute();
-			carriedItem = null;
+	public void executeCommand(boolean lost){
+		if ( carriedItem != null ){
+			if ( (lost && carriedItem.isMalus()) ||
+				 (!lost && !carriedItem.isMalus()) )
+			{
+				carriedItem.execute();
+				carriedItem = null;
+			}
 		}
 	}
-	
-	public boolean isLost(){
-		return false; // A implémenter
-	}
-	
 	/*
 	 * Must be changed in order to adapt the the true size of the balloon
 	 */

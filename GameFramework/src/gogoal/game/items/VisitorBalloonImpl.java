@@ -7,32 +7,50 @@ import java.util.Random;
 import gogoal.game.entities.BalloonEntity;
 
 public class VisitorBalloonImpl implements VisitorBalloon{
-	public static final int DEFAULT_ITEM_CHANCE = 10; 
+	public static final int DEFAULT_ITEM_CHANCE = 30;
+	public static final int DEFAULT_MALUS_CHANCE = 30; 
 	
-	protected ArrayList<CommandItem> items;
-	protected final int itemChance;
+	protected ArrayList<CommandItem> bonusItems, malusItems;
+	protected final int itemChance, malusChance;
 	
 	public VisitorBalloonImpl(ArrayList<CommandItem> items){
-		this(items, DEFAULT_ITEM_CHANCE);
+		this(items, DEFAULT_ITEM_CHANCE, DEFAULT_MALUS_CHANCE);
 	}
 	
-	public VisitorBalloonImpl(ArrayList<CommandItem> items, int itemChance){
-		this.items = items;
+	public VisitorBalloonImpl(ArrayList<CommandItem> items, int itemChance, int malusChance){
+		this.bonusItems = new ArrayList<CommandItem>();
+		this.malusItems = new ArrayList<CommandItem>();
 		this.itemChance = itemChance;
+		this.malusChance = malusChance;
+		
+		for ( CommandItem ci : items ){
+			if ( ci.isMalus() )
+				malusItems.add(ci);
+			else
+				bonusItems.add(ci);
+		}
 	}
 
 	@Override
 	public void visit(BalloonEntity be) {
-		if ( items != null ){
-			Random r = new Random(new Date().getTime());
-			int check = Math.abs(r.nextInt()) % 100;
+		Random r = new Random(new Date().getTime());
+		int check = Math.abs(r.nextInt()) % 100;
+		
+		if ( check <= itemChance) {
 			
-			if ( check <= itemChance) {
-				
-				int index = Math.abs(r.nextInt()) % items.size();
-				CommandItem given = items.get(index);
-				be.setCarriedItem(given);
-			}
+			int checkMalus = Math.abs(r.nextInt()) % 100;
+			
+			if ( checkMalus <= malusChance )
+				be.setCarriedItem(getRandomFromList(malusItems));
+			else
+				be.setCarriedItem(getRandomFromList(bonusItems));
 		}
+	}
+	
+	private CommandItem getRandomFromList(ArrayList<CommandItem> list){
+		Random r = new Random(new Date().getTime());
+		int index = Math.abs(r.nextInt()) % list.size();
+		
+		return list.get(index);
 	}
 }
