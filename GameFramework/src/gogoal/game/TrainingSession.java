@@ -27,6 +27,9 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	protected Canvas canvas;
 	
 	protected int balloonsFired;
+	private int deffx = 0;
+	private int deffy = 0;
+	private int but = 0;
 	protected ProxyPerceptionEffect effects;
 	
 	protected FootballFieldEntity footballField;
@@ -56,6 +59,18 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 			
 			universe.addGameEntity(gloves);
 			universe.addGameEntity(currentBalloon);
+			
+			if (Math.abs(deffx)>100){
+				System.out.println("but");
+			}else{
+				System.out.println("pas but");
+			} 
+		} else {
+				deffx = currentBalloon.getPosition().x - gloves.getPosition().x;
+				deffy = currentBalloon.getPosition().y - gloves.getPosition().y;
+	
+				System.out.println("différence x ="+deffx);
+				//System.out.println("différence y ="+deffy);1
 		}
 	}
 	
