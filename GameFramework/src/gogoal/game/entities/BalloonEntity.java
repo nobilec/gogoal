@@ -37,6 +37,10 @@ public class BalloonEntity extends GoGoal3DEntity
 		this.carriedItem = item;
 	}
 	
+	public boolean carriesItem(){
+		return carriedItem != null;
+	}
+	
 	public void executeCommand(boolean lost){
 		if ( carriedItem != null ){
 			if ( (lost && carriedItem.isMalus()) ||
@@ -60,24 +64,12 @@ public class BalloonEntity extends GoGoal3DEntity
 
 	@Override
 	public void draw(Graphics g) {
-		// TEST MOUVEMENT
-		//position.move(-0.5f, -0.8f, -5.0f);
 		trajectory.update();
 		
 		if ( carriedItem == null ){
 			super.draw(g);
 		} else {
 			super.draw(g, carriedItem.getImage());
-			
-			/* TEST EXECUTION COMMANDE, A FAIRE QUAND LE BALLON EST 
-			 * TERMINE (pris ou perdu)
-			 */
-			/*if ( position.getZ() <= 0.0f ){
-				executeCommand();
-				GoGoal.getInstance().getCurrentTrainingSession().addToScore(1);
-				GoGoal.getInstance().nextLevel();
-			}*/
 		}
 	}
-
 }

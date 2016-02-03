@@ -35,8 +35,8 @@ public class ListCommandItem extends ArrayList<CommandItem>{
 		// Speed :
 		
 		BuilderPerceptionEffectSpeed speedBuilder = new BuilderPerceptionEffectSpeed();
-		speedBuilder.setSpeedMultiplier(0.6f);
-		speedBuilder.setDuration(8000);
+		speedBuilder.setSpeedMultiplier(0.75f);
+		speedBuilder.setDuration(6000);
 		this.add(
 				new CommandItemImpl(
 						GoGoalConfig.getInstance().SPEED_IMG, GoGoal.getInstance().getCanvas(), 128, 128,

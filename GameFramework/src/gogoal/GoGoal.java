@@ -15,13 +15,12 @@ public class GoGoal extends GameDefaultImpl {
 	private static GoGoal instance = null;
 	
 	private TrainingSession currentLevel;
-	private int currentLevelIndex;
+	private int currentLevelIndex, lives;
 	private boolean started, defeat;
 	
 	private GoGoal(){
 		super();
 		started = false;
-		//this.life[0].setValue(5);
 		
 		int w = GoGoalConfig.getInstance().WIDTH;
 		int h = GoGoalConfig.getInstance().HEIGHT;
@@ -33,6 +32,8 @@ public class GoGoal extends GameDefaultImpl {
 	}
 	
 	private void init(){
+		lifeValue.setText(String.valueOf(lives));
+		setLives(1);
 		defeat = false;
 		currentLevel = new TrainingSession01(this);
 		currentLevelIndex = 0;
@@ -95,15 +96,33 @@ public class GoGoal extends GameDefaultImpl {
 		}
 	}
 	
+	public void removeLife(){
+		setLives( getLives() - 1);
+	}
+	
+	public void addLife(){
+		setLives( getLives() + 1);
+	}
+	
+	public void setLives(int v){
+		lives = v;
+		lifeValue.setText(String.valueOf(lives));
+		if ( lives == 0 )
+			defeat();
+	}
+	
+	public int getLives(){
+		return lives;
+	}
+	
 	public boolean isPlayerDefeated(){
 		return defeat;
 	}
 	
 	public void defeat(){
-		endOfGame();
 		if ( currentLevel != null ){
-			this.currentLevel.end();
-			this.currentLevel = null;
+			informationValue.setText("Defeat");
+			currentLevel.interrupt();
 		}
 		defeat = true;
 		System.out.println("Vous avez perdu!");

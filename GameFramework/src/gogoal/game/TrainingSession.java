@@ -1,7 +1,6 @@
 package gogoal.game;
 
 import java.awt.Canvas;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Stack;
 
@@ -19,12 +18,8 @@ import gogoal.game.entities.BalloonEntity;
 import gogoal.game.entities.FootballFieldEntity;
 import gogoal.game.entities.GlovesEntity;
 import gogoal.game.entities.GoalEntity;
-import gogoal.game.items.ListCommandItem;
-import gogoal.game.items.VisitorBalloon;
-import gogoal.game.items.VisitorBalloonImpl;
 import gogoal.perception_effects.ProxyPerceptionEffect;
 import gogoal.rendering.Camera;
-import gogoal.utility.Point3D;
 
 public abstract class TrainingSession extends GameLevelDefaultImpl
 {
@@ -68,7 +63,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	private void checkBalloonGlovesPosition(){
 		if ( !goalChecked ){
 			if ( 	currentBalloon != null && 
-					currentBalloon.get3DPosition().isBehindZ(gloves.get3DPosition())) 
+					currentBalloon.get3DPosition().isBehindZ(gloves.get3DPosition()))
 			{
 				universe.removeGameEntity(currentBalloon);
 				universe.removeGameEntity(gloves);
@@ -110,9 +105,10 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		boolean malus = false;
 		
 		if ( but == 1 ){
-			modLife(-1);
+			((GoGoal) g).removeLife();
 			defeat = ((GoGoal) g).isPlayerDefeated();
 			malus = true;
+			but = 0;
 		} else {
 			addToScore(1);
 			malus = false;
@@ -140,19 +136,10 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		universe.addGameEntity(gloves);
 		currentBalloon = be;
 		goalChecked = false;
-		but = 0;
 	}
 	
 	public void addToScore(int value){
 		score[0].setValue(score[0].getValue() + value);
-	}
-	
-	public void modLife(int value){
-		life[0].setValue(life[0].getValue() + value);
-		
-		if ( life[0].getValue() == 0 ){
-			((GoGoal) g).defeat();
-		}
 	}
 
 	@Override
@@ -175,6 +162,8 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		
 		universe.addGameEntity(footballField);
 		universe.addGameEntity(goal);
+
+		((GoGoal) g).addLife();
 		
 		setUpLevel();
 		placeBalloonEntity(bStack.pop());
