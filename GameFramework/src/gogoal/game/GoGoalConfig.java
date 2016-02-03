@@ -12,6 +12,8 @@ public class GoGoalConfig {
 	public final String BALLOON_IMG = "gogoal-resources/balloon-medium-transp.gif";
 	public final String GLOVES_IMG = "gogoal-resources/gloves.png";
 	public final String MURGEX_IMG = "gogoal-resources/flask-murgex.png";
+	public final String SPEED_IMG = "gogoal-resources/flask-speed.png";
+	public final String BLOBLOTTE_IMG = "gogoal-resources/flask-bloblotte.png";
 	
 	public static GoGoalConfig getInstance(){
 		if ( instance == null )

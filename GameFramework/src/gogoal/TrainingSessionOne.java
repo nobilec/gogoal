@@ -20,6 +20,15 @@ public class TrainingSessionOne extends TrainingSession
 		
 		// TEST ITEM :
 		VisitorBalloon vb = new VisitorBalloonImpl(ListCommandItem.getInstance());
+		
+		/*BuilderPerceptionEffectBloblotte bbBuilder = new BuilderPerceptionEffectBloblotte();
+		bbBuilder.setIntensity(30.0f);
+		bbBuilder.setMagnitude(60.0f);
+		bbBuilder.setDuration(10000);
+		this.getProxyPreceptionEffect().composeEffect(bbBuilder);
+		this.getProxyPreceptionEffect().apply();*/
+		
+		
 		be.accept(vb);
 		
 		placeBalloonEntity(be);

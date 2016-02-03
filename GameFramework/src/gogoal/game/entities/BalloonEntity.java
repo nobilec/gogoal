@@ -20,6 +20,14 @@ public class BalloonEntity extends GoGoal3DEntity
 		trajectory = new BalloonEntityTrajectory(this);
 		carriedItem = null;
 	}
+	
+	public void setZSpeed(float zSpeed){
+		trajectory.setZSpeed(zSpeed);
+	}
+	
+	public float getZSpeed(){
+		return trajectory.getZSpeed();
+	}
 
 	public void accept(VisitorBalloon v){
 		v.visit(this);

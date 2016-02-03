@@ -134,4 +134,12 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	public ProxyPerceptionEffect getProxyPreceptionEffect(){
 		return effects;
 	}
+	
+	public GlovesEntity getGloves(){
+		return gloves;
+	}
+	
+	public BalloonEntity getCurrentBalloon(){
+		return currentBalloon;
+	}
 }
