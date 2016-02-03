@@ -12,12 +12,12 @@ public class BalloonEntityTrajectory
 	private float tabx [] = {-2.0f,-1.5f,-1.0f,-0.5f,0.0f,0.5f,1.0f,1.5f,2.0f};
 	private float taby [] = {-1.5f,-1.0f,-0.5f,0.0f,0.5f};
 
-	public BalloonEntityTrajectory(BalloonEntity owner) {
+	BalloonEntityTrajectory(BalloonEntity owner) {
 		super();
 		this.owner = owner;
 	}
 
-	public void update() {
+	void update() {
 		// TEST MOUVEMENT
 		// les limites [2,-2] & [0.5,-1.5], -5 fixe
 		if (v == true){
