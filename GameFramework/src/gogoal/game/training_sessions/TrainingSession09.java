@@ -23,7 +23,7 @@ public class TrainingSession09 extends TrainingSession {
 		for ( int i = 1; i <= 24; ++i){
 			
 			BalloonEntity be = new BalloonEntity(canvas, new Point3D(400, 300, 1000));
-			be.setSpeedMult(2.4f + 5.0f / (float) i );
+			be.setSpeedMult(4.5f + 5.0f / (float) i );
 			be.accept(vb);
 			bStack.push(be);
 		}

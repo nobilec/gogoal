@@ -1,6 +1,7 @@
 package gogoal.game;
 
 import java.awt.Canvas;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Stack;
 
@@ -75,12 +76,12 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 				universe.addGameEntity(gloves);
 				universe.addGameEntity(currentBalloon);
 				
-				if  ( 	Math.abs(deffx) > 100 )
+				if  ( Math.abs(deffx) > 70 && Math.abs(deffy) > 50)
 				{
-					System.out.println("but");
+					//System.out.println("but");
 					but = 1;
 				} else {
-					System.out.println("pas but");
+					//System.out.println("pas but");
 					but = 0;
 					nextBalloon();
 				}
@@ -88,7 +89,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 				
 			} else {
 					deffx = currentBalloon.getPosition().x - gloves.getPosition().x;
-					//deffy = currentBalloon.getPosition().y - gloves.getPosition().y;
+					deffy = currentBalloon.getPosition().y - gloves.getPosition().y;
 					//System.out.println("différence x ="+deffx);
 					//System.out.println("différence y ="+deffy);
 			}

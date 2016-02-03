@@ -33,6 +33,7 @@ public class GoGoal extends GameDefaultImpl {
 	
 	private void init(){
 		defeat = false;
+		this.life[0].setValue(1);
 		currentLevel = new TrainingSession01(this);
 		currentLevelIndex = 0;
 		
@@ -80,16 +81,17 @@ public class GoGoal extends GameDefaultImpl {
 	}
 	
 	public void nextLevel(){
-		System.out.println("NAIXTE");
-		this.currentLevel.end();
-		++this.currentLevelIndex;
-		
-		if ( currentLevelIndex < this.gameLevels.size() ) {
-			this.currentLevel = (TrainingSession) gameLevels.get(currentLevelIndex);
-		} else {
-			// END OF THE GAME
-			this.currentLevel = null;
-			System.out.println("Felicitations, vous avez terminé le jeu");
+		if ( currentLevel != null ){
+			this.currentLevel.end();
+			++this.currentLevelIndex;
+			
+			if ( currentLevelIndex < this.gameLevels.size() ) {
+				this.currentLevel = (TrainingSession) gameLevels.get(currentLevelIndex);
+			} else {
+				// END OF THE GAME
+				this.currentLevel = null;
+				System.out.println("Felicitations, vous avez terminé le jeu");
+			}
 		}
 	}
 	

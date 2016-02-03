@@ -3,6 +3,7 @@ package gogoal.game.items;
 import java.awt.Canvas;
 
 import gogoal.GoGoal;
+import gogoal.game.TrainingSession;
 import gogoal.perception_effects.builders.BuilderPerceptionEffect;
 import gogoal.rendering.Pseudo3DDrawableImage;
 
@@ -30,9 +31,9 @@ public class CommandItemImpl implements CommandItem{
 	
 	@Override
 	public void execute() {
-		GoGoal.getInstance()
-			.getCurrentTrainingSession()
-			.getProxyPreceptionEffect()
-			.composeEffect(effect);
+		TrainingSession ts = GoGoal.getInstance().getCurrentTrainingSession();
+		if ( ts != null ){
+			ts.getProxyPreceptionEffect().composeEffect(effect);
+		}
 	}
 }
