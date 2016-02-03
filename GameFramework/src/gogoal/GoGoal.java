@@ -21,6 +21,7 @@ public class GoGoal extends GameDefaultImpl {
 	private GoGoal(){
 		super();
 		started = false;
+		//this.life[0].setValue(5);
 		
 		int w = GoGoalConfig.getInstance().WIDTH;
 		int h = GoGoalConfig.getInstance().HEIGHT;
@@ -33,7 +34,6 @@ public class GoGoal extends GameDefaultImpl {
 	
 	private void init(){
 		defeat = false;
-		this.life[0].setValue(1);
 		currentLevel = new TrainingSession01(this);
 		currentLevelIndex = 0;
 		
@@ -101,8 +101,10 @@ public class GoGoal extends GameDefaultImpl {
 	
 	public void defeat(){
 		endOfGame();
-		this.currentLevel.end();
-		this.currentLevel = null;
+		if ( currentLevel != null ){
+			this.currentLevel.end();
+			this.currentLevel = null;
+		}
 		defeat = true;
 		System.out.println("Vous avez perdu!");
 	}

@@ -76,7 +76,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 				universe.addGameEntity(gloves);
 				universe.addGameEntity(currentBalloon);
 				
-				if  ( Math.abs(deffx) > 70 && Math.abs(deffy) > 50)
+				if  ( Math.abs(deffx) > 20 && Math.abs(deffy) > 20)
 				{
 					//System.out.println("but");
 					but = 1;
