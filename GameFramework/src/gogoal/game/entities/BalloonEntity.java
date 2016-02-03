@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import gogoal.GoGoal;
 import gogoal.game.GoGoalConfig;
 import gogoal.game.items.CommandItem;
 import gogoal.game.items.VisitorBalloon;
@@ -64,8 +65,11 @@ public class BalloonEntity extends GoGoal3DEntity
 			/* TEST EXECUTION COMMANDE, A FAIRE QUAND LE BALLON EST 
 			 * TERMINE (pris ou perdu)
 			 */
-			if ( position.getZ() <= 0.0f )
+			if ( position.getZ() <= 0.0f ){
 				executeCommand();
+				GoGoal.getInstance().getCurrentTrainingSession().addToScore(1);
+				GoGoal.getInstance().nextLevel();
+			}
 		}
 	}
 

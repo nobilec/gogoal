@@ -1,8 +1,6 @@
 package gogoal.game;
 
 import java.awt.Canvas;
-import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.Date;
 
 import gameframework.game.CanvasDefaultImpl;
@@ -27,6 +25,8 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	private boolean stopTS;
 	private int gameUpdateDelay;
 	protected Canvas canvas;
+	
+	protected int balloonsFired;
 	protected ProxyPerceptionEffect effects;
 	
 	protected FootballFieldEntity footballField;
@@ -37,8 +37,9 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	public TrainingSession(Game g) {
 		super(g);
 		canvas = g.getCanvas();
-		stopTS = false;
+		stopTS = true;
 		gameUpdateDelay = DEFAULT_GAME_UPDATE_DELAY;
+		balloonsFired = 0;
 		effects = new ProxyPerceptionEffect();
 	}
 	
@@ -67,6 +68,10 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		universe.addGameEntity(gloves);
 		currentBalloon = be;
 	}
+	
+	public void addToScore(int value){
+		score[0].setValue(score[0].getValue() + value);
+	}
 
 	@Override
 	protected void init() {
@@ -77,21 +82,6 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 		overlapProcessor.setOverlapRules(overlapRules);
 		universe = new GameUniverseDefaultImpl(moveBlockerChecker, overlapProcessor);
 		overlapRules.setUniverse(universe);
-
-		int w = GoGoalConfig.getInstance().WIDTH;
-		int h = GoGoalConfig.getInstance().HEIGHT;
-		
-		canvas.setSize(w, h);
-		canvas.getParent().setSize(w, h);
-		canvas.getParent().validate();
-		
-		/*
-		 * Replaces mouse cursor by blank image.
-		 * Source : https://stackoverflow.com/questions/1984071/how-to-hide-cursor-in-a-swing-application#1984117
-		 */
-		canvas.setCursor(canvas.getToolkit().createCustomCursor(
-	            new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),
-	            "null"));
 		
 		gameBoard = new GameUniverseViewPortDefaultImpl(canvas, universe);
 		gameBoard.refresh();
@@ -110,7 +100,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 	@Override
 	public void run() {
 		stopTS = false;
-		// main game loop 
+		
 		long start;
 		while (!stopTS && !this.isInterrupted()) {
 			start = new Date().getTime();
@@ -128,24 +118,18 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 					Thread.sleep(sleepTime);
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
 	@Override
 	public void end(){
+		effects.terminate();
 		stopTS = true;
 	}
 	
 	protected abstract void setUpLevel();
-	
-	public void setGameUpdateDelay(int gud){
-		gameUpdateDelay = gud;
-	}
-	
-	public int getGameUpdateDelay(){
-		return gameUpdateDelay;
-	}
 	
 	public ProxyPerceptionEffect getProxyPreceptionEffect(){
 		return effects;

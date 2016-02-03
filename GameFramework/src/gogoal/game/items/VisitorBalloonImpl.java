@@ -7,7 +7,7 @@ import java.util.Random;
 import gogoal.game.entities.BalloonEntity;
 
 public class VisitorBalloonImpl implements VisitorBalloon{
-	public static final int DEFAULT_ITEM_CHANCE = 10; 
+	public static final int DEFAULT_ITEM_CHANCE = 50; 
 	
 	protected ArrayList<CommandItem> items;
 	protected final int itemChance;

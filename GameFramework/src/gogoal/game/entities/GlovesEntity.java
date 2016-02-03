@@ -20,7 +20,7 @@ public class GlovesEntity extends GoGoal3DEntity {
 	public void draw(Graphics g){
 		Point mPos = MouseInfo.getPointerInfo().getLocation();
 		Camera c = Camera.getInstance();
-		position.moveTo(mPos.x + c.getXOffset() * 2.0f, mPos.y + c.getYOffset() * 2.0f, position.getZ());
+		position.moveTo(mPos.x - c.getXOffset(), mPos.y - c.getYOffset(), position.getZ());
 		super.draw(g);
 	}
 }

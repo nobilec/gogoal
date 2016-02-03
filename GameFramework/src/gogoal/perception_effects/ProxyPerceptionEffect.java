@@ -30,6 +30,16 @@ public class ProxyPerceptionEffect implements Observer {
 			removeTerminatedEffects();
 	}
 
+	public void terminate(){
+		PerceptionEffectAbs cur = end;
+		while ( cur != null ){
+			cur.wearOff();
+			cur = cur.getDecorated();
+		}
+		
+		removeTerminatedEffects();
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
 		if ( o instanceof PerceptionEffectAbs ){
@@ -74,5 +84,10 @@ public class ProxyPerceptionEffect implements Observer {
 		}
 		
 		removeWornOff = false;
+	}
+	
+	@Override
+	public void finalize(){
+		terminate();
 	}
 }
