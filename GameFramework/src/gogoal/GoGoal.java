@@ -15,15 +15,11 @@ public class GoGoal extends GameDefaultImpl {
 	
 	private TrainingSession currentLevel;
 	private int currentLevelIndex;
+	private boolean started;
 	
 	private GoGoal(){
-		currentLevel = new TrainingSessionOne(this);
-		currentLevelIndex = 0;
-		
-		ArrayList<GameLevel> levels = new ArrayList<GameLevel>();
-		levels.add(currentLevel);
-		levels.add(new TrainingSessionOne(this));
-		this.setLevels(levels);
+		super();
+		started = false;
 		
 		int w = GoGoalConfig.getInstance().WIDTH;
 		int h = GoGoalConfig.getInstance().HEIGHT;
@@ -32,6 +28,16 @@ public class GoGoal extends GameDefaultImpl {
 		this.defaultCanvas.setSize(w, h);
 		this.defaultCanvas.getParent().setSize(w, h);
 		this.defaultCanvas.getParent().validate();
+	}
+	
+	private void init(){
+		currentLevel = new TrainingSessionOne(this);
+		currentLevelIndex = 0;
+		
+		ArrayList<GameLevel> levels = new ArrayList<GameLevel>();
+		levels.add(currentLevel);
+		levels.add(new TrainingSessionOne(this));
+		this.setLevels(levels);
 		
 		/*
 		 * Replaces mouse cursor by blank image.
@@ -46,6 +52,15 @@ public class GoGoal extends GameDefaultImpl {
 		if ( instance == null )
 			instance = new GoGoal();
 		return instance;
+	}
+	
+	@Override
+	public void start(){
+		init();
+		if ( !started ){
+			super.start();
+			started = true;
+		}
 	}
 	
 	public TrainingSession getCurrentTrainingSession(){

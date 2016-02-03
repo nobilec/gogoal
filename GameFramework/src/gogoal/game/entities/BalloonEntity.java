@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import gogoal.GoGoal;
 import gogoal.game.GoGoalConfig;
 import gogoal.game.items.CommandItem;
 import gogoal.game.items.VisitorBalloon;
@@ -13,10 +12,12 @@ import gogoal.utility.Point3D;
 
 public class BalloonEntity extends GoGoal3DEntity
 {
+	protected BalloonEntityTrajectory trajectory;
 	protected CommandItem carriedItem;
 	
 	public BalloonEntity(Canvas defaultCanvas, Point3D pos) {
 		super(defaultCanvas, GoGoalConfig.getInstance().BALLOON_IMG, 128, 128, pos);
+		trajectory = new BalloonEntityTrajectory(this);
 		carriedItem = null;
 	}
 
@@ -55,7 +56,8 @@ public class BalloonEntity extends GoGoal3DEntity
 	@Override
 	public void draw(Graphics g) {
 		// TEST MOUVEMENT
-		position.move(-0.5f, -0.8f, -5.0f);
+		//position.move(-0.5f, -0.8f, -5.0f);
+		trajectory.update();
 		
 		if ( carriedItem == null ){
 			super.draw(g);
@@ -65,11 +67,11 @@ public class BalloonEntity extends GoGoal3DEntity
 			/* TEST EXECUTION COMMANDE, A FAIRE QUAND LE BALLON EST 
 			 * TERMINE (pris ou perdu)
 			 */
-			if ( position.getZ() <= 0.0f ){
+			/*if ( position.getZ() <= 0.0f ){
 				executeCommand();
 				GoGoal.getInstance().getCurrentTrainingSession().addToScore(1);
 				GoGoal.getInstance().nextLevel();
-			}
+			}*/
 		}
 	}
 
