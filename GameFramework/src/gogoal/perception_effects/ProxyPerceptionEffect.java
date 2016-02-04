@@ -4,9 +4,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import gogoal.perception_effects.builders.BuilderPerceptionEffect;
+import gogoal.perception_effects.decorators.PerceptionEffect;
 import gogoal.perception_effects.decorators.PerceptionEffectAbs;
 
-public class ProxyPerceptionEffect implements Observer {
+public class ProxyPerceptionEffect implements Observer, PerceptionEffect {
 	private PerceptionEffectAbs end;
 	private boolean removeWornOff;
 	
@@ -30,7 +31,7 @@ public class ProxyPerceptionEffect implements Observer {
 			removeTerminatedEffects();
 	}
 
-	public void terminate(){
+	public void wearOff(){
 		PerceptionEffectAbs cur = end;
 		while ( cur != null ){
 			cur.wearOff();
@@ -90,6 +91,6 @@ public class ProxyPerceptionEffect implements Observer {
 	
 	@Override
 	public void finalize(){
-		terminate();
+		wearOff();
 	}
 }

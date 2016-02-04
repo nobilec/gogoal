@@ -1,7 +1,6 @@
 package gogoal.rendering;
 
 import java.awt.Canvas;
-import java.awt.Image;
 import java.awt.Point;
 
 import gameframework.base.DrawableImage;
@@ -30,10 +29,5 @@ public class ResizableDrawableImage extends DrawableImage
 	
 	public Point getDimension(){
 		return dimension;
-	}
-	
-	@Override
-	public Image getImage(){
-		return image;
 	}
 }

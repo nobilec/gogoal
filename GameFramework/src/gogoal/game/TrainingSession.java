@@ -196,7 +196,7 @@ public abstract class TrainingSession extends GameLevelDefaultImpl
 
 	@Override
 	public void end(){
-		effects.terminate();
+		effects.wearOff();
 		stopTS = true;
 	}
 	
